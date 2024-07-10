@@ -45,7 +45,8 @@ void loop() {
     Serial.print(LoRaData);
 
     // Extract float value from the received string
-    int floatStart = LoRaData.indexOf("Float value: ") + String("Float value: ").length();
+    // int floatStart = LoRaData.indexOf("Float value: ") + String("Float value: ").length();
+    int floatStart = LoRaData.indexOf("hum: ") + String("hum: ").length(); //They both need to match inside the parenthesies for indexing to work
     if (floatStart > 0) {
       String floatString = LoRaData.substring(floatStart);
       float receivedFloat = floatString.toFloat();

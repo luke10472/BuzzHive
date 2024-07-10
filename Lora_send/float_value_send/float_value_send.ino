@@ -45,7 +45,7 @@ void loop() {
 
   // Send LoRa packet to receiver
   LoRa.beginPacket();
-  LoRa.print("Float value: ");
+  LoRa.print("hum: "); //This is how to transmit strings
   LoRa.print(floatString);
   LoRa.endPacket();
 
