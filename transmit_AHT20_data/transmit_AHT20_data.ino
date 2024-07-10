@@ -1,9 +1,12 @@
+// this code transmits temperature and humidity from an AHT20 via lora module
+// Luke Riddoch 07/10/24
+
 #include <SPI.h>
 #include <LoRa.h>
 #include <Adafruit_AHTX0.h>
 
+// sets up the AHT20
 Adafruit_AHTX0 aht;
-
 Adafruit_Sensor *aht_humidity, *aht_temp;
 
 //define the pins used by the transceiver module
@@ -11,12 +14,12 @@ Adafruit_Sensor *aht_humidity, *aht_temp;
 #define rst 14
 #define dio0 2
 
-float myFloat = 0.0;
+// creates the float variables that measure temp/hum
 float temperature = 0;
 float humidity_value = 0;
 
 void setup() {
-  //initialize Serial Monitor
+  // initialize Serial Monitor
   Serial.begin(115200);
   while (!Serial);
   Serial.println("LoRa Sender");
@@ -27,6 +30,9 @@ void setup() {
     }
   }
   Serial.println("AHT10/AHT20 Found!");
+
+
+  // this prints the sensor information (not a measurement)
   aht_temp = aht.getTemperatureSensor();
   aht_temp->printSensorDetails();
 
@@ -53,24 +59,19 @@ void setup() {
 }
 
 void loop() {
+  // calls a function from below
   Load_AHT20_Data();
 
-  // Increment the float for demonstration purposes
-  myFloat += 0.1;
-
-  Serial.print("Sending float value: ");
-  Serial.println(humidity_value);
-
   // Convert the float to a string
-  String floatString1 = String(humidity_value, 2); // 2 decimal places
-  String floatString2 = String(temperature, 2); // 2 decimal places
+  String hum_string = String(humidity_value, 2); // 2 decimal places
+  String temp_string = String(temperature, 2); // 2 decimal places
 
   // Send LoRa packet to receiver
   LoRa.beginPacket();
-  LoRa.print("hum: "); //This is how to transmit strings
-  LoRa.print(floatString1);
-  LoRa.print("temp: "); //This is how to transmit strings
-  LoRa.print(floatString2);
+  LoRa.print("hum:"); //This is how to transmit strings
+  LoRa.print(hum_string);
+  LoRa.print(" temp:"); //This is how to transmit strings
+  LoRa.print(temp_string);
   LoRa.endPacket();
 
   delay(10000);
@@ -83,7 +84,7 @@ void Load_AHT20_Data() {
   temperature = temp_event.temperature; // Celsius
   humidity_value = humidity_event.relative_humidity;
   //-----------------------------------------------------------
-  Serial.printf("Temperature: %.2f °C\n", temperature);
+  Serial.printf("\nTemperature: %.2f °C\n", temperature);
   Serial.printf("Humidity: %.2f %%\n", humidity_value);
 }
 

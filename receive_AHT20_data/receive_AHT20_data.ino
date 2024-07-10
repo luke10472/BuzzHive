@@ -1,3 +1,6 @@
+// this code receives temperature and humidity from an AHT20 via lora module
+// Luke Riddoch 07/10/24
+
 #include <SPI.h>
 #include <LoRa.h>
 
@@ -35,7 +38,7 @@ void loop() {
   int packetSize = LoRa.parsePacket();
   if (packetSize) {
     // received a packet
-    Serial.print("Received packet '");
+    Serial.print("Received packet- ");
 
     // read packet
     String LoRaData = "";
@@ -46,8 +49,8 @@ void loop() {
 
     // Extract float value from the received string
     // int floatStart = LoRaData.indexOf("Float value: ") + String("Float value: ").length();
-    int floatStart1 = LoRaData.indexOf("hum: ") + String("hum: ").length(); //finds the index of the phrase in LoRaData then adds the length of the phrase to index the corresponding value
-    int floatStart2 = LoRaData.indexOf("temp: ") + String("temp: ").length(); 
+    int floatStart1 = LoRaData.indexOf("hum:") + String("hum:").length(); //finds the index of the phrase in LoRaData then adds the length of the phrase to index the corresponding value
+    int floatStart2 = LoRaData.indexOf("temp:") + String("temp:").length(); 
     if (floatStart1 > 0) {
       String floatString1 = LoRaData.substring(floatStart1);
       float receivedFloat1 = floatString1.toFloat();
