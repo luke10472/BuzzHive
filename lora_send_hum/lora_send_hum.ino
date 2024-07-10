@@ -62,12 +62,15 @@ void loop() {
   Serial.println(humidity_value);
 
   // Convert the float to a string
-  String floatString = String(humidity_value, 2); // 2 decimal places
+  String floatString1 = String(humidity_value, 2); // 2 decimal places
+  String floatString2 = String(temperature, 2); // 2 decimal places
 
   // Send LoRa packet to receiver
   LoRa.beginPacket();
   LoRa.print("hum: "); //This is how to transmit strings
-  LoRa.print(floatString);
+  LoRa.print(floatString1);
+  LoRa.print("temp: "); //This is how to transmit strings
+  LoRa.print(floatString2);
   LoRa.endPacket();
 
   delay(10000);

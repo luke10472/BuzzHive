@@ -46,12 +46,18 @@ void loop() {
 
     // Extract float value from the received string
     // int floatStart = LoRaData.indexOf("Float value: ") + String("Float value: ").length();
-    int floatStart = LoRaData.indexOf("hum: ") + String("hum: ").length(); //They both need to match inside the parenthesies for indexing to work
-    if (floatStart > 0) {
-      String floatString = LoRaData.substring(floatStart);
-      float receivedFloat = floatString.toFloat();
+    int floatStart1 = LoRaData.indexOf("hum: ") + String("hum: ").length(); //finds the index of the phrase in LoRaData then adds the length of the phrase to index the corresponding value
+    int floatStart2 = LoRaData.indexOf("temp: ") + String("temp: ").length(); 
+    if (floatStart1 > 0) {
+      String floatString1 = LoRaData.substring(floatStart1);
+      float receivedFloat1 = floatString1.toFloat();
       Serial.print(" -> Humidity Mesurement: ");
-      Serial.print(receivedFloat);
+      Serial.print(receivedFloat1);
+
+      String floatString2 = LoRaData.substring(floatStart2);
+      float receivedFloat2 = floatString2.toFloat();
+      Serial.print(" -> Temperature Mesurement: ");
+      Serial.print(receivedFloat2);
     }
 
     // print RSSI of packet
