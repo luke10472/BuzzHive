@@ -50,7 +50,7 @@ void loop() {
     if (floatStart > 0) {
       String floatString = LoRaData.substring(floatStart);
       float receivedFloat = floatString.toFloat();
-      Serial.print("' -> Extracted float: ");
+      Serial.print(" -> Humidity Mesurement: ");
       Serial.print(receivedFloat);
     }
 
